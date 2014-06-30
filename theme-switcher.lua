@@ -51,6 +51,33 @@ function themeSwitcher.themes(directory)
     return t
 end
 
+function themeSwitcher.nextTheme(current, directory)
+    local t = themeSwitcher.themes(directory)
+    local currentTheme = themeSwitcher.currentTheme()
+    local result = defaultTheme
+
+    local i = 1
+    local cont = true
+    while t[i] and cont do
+        if t[i] == currentTheme then
+
+            if t[i + 1] then
+                result = t[i + 1]
+            elseif t[0] then
+                result = t[0]
+            else
+                result = t[i]
+            end
+
+            cont = false
+        end
+
+        i = i + 1
+    end
+
+    return result
+end
+
 function themeSwitcher.widget(path)
     local logo = " &#358;  ";
 
@@ -63,6 +90,9 @@ function themeSwitcher.widget(path)
     local press = function ()
     end
     local release = function ()
+        themeSwitcher.setCurrentTheme(
+            themeSwitcher.nextTheme(
+                themeSwitcher.currentTheme(), path))
         awesome.restart()
     end
 
