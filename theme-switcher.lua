@@ -30,12 +30,21 @@ local wibox = require("wibox")
 
 local themeSwitcher = {}
 
+local themeConfigFile = ".awesome-theme"
+local themeConfigPath = os.getenv("HOME") .. "/" .. themeConfigFile
+local defaultThemesPath = "/usr/share/awesome/themes"
+local defaultTheme = defaultThemesPath .. "/default/theme.lua"
+
 function themeSwitcher.widget(path)
     local logo = " &#358;  ";
 
     if path == nil then
-        path = "/usr/share/awesome/themes"
+        path = defaultThemesPath
     end
+
+    scandir(path)
+    themeSwitcher.setCurrentTheme(defaultTheme)
+    themeSwitcher.currentTheme()
 
     local mod = {}
     local button = 1
@@ -54,8 +63,30 @@ function themeSwitcher.widget(path)
     return widget
 end
 
+function themeSwitcher.setCurrentTheme(theme)
+    local f = io.open(themeConfigPath, "w")
+
+    if f then
+        f:write(theme)
+        f:close()
+    else
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Awesome Theme Switcher",
+                         text = "unable to write to config file" })
+    end
+end
+
 function themeSwitcher.currentTheme()
-    return "/usr/share/awesome/themes/default/theme.lua"
+    local result = defaultTheme
+    local f = io.open(themeConfigPath, "r")
+
+    if f == nil then return result end
+
+    local theme = f:read("*line")
+
+    if theme == nil then return result end
+
+    return theme
 end
 
 return themeSwitcher
