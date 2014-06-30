@@ -40,14 +40,9 @@ function themeSwitcher.widget(path)
     local mod = {}
     local button = 1
     local press = function ()
-        naughty.notify({ preset = naughty.config.presets.normal,
-                         title = "Theme Switcher!",
-                         text = "press" })
     end
     local release = function ()
-        naughty.notify({ preset = naughty.config.presets.normal,
-                         title = "Theme Switcher!",
-                         text = "release" })
+        awesome.restart()
     end
 
     local button = awful.button({ }, 1, press, release)
