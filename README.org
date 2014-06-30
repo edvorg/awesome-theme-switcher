@@ -3,7 +3,7 @@
   Provides functionality to store current theme setting on disk and
   to create interactive widget to switch themes.
 
-  ** Usage
+** Usage
 
   Load theme switcher
 
