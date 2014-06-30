@@ -20,5 +20,7 @@
   Optionally create widget on you status bar
 
   #+BEGIN_SRC emacs lisp
-  right_layout:add(themeSwitcher.widget(nil))
+  right_layout:add(themeSwitcher.widget("/usr/share/awesome/themes"))
+  -- or
+  right_layout:add(themeSwitcher.widget(nil)) -- default value will be used
   #+END_SRC
