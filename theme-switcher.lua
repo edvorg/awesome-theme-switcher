@@ -59,4 +59,8 @@ function themeSwitcher.widget(path)
     return widget
 end
 
+function themeSwitcher.currentTheme()
+    return "/usr/share/awesome/themes/default/theme.lua"
+end
+
 return themeSwitcher
