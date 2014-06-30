@@ -7,19 +7,19 @@
 
   Load theme switcher
 
-  #+BEGIN_SRC emacs lisp
+  #+BEGIN_SRC lua
   local themeSwitcher = require("theme-switcher")
   #+END_SRC
 
   Initialize beautiful with it's current theme
 
-  #+BEGIN_SRC emacs lisp
+  #+BEGIN_SRC lua
   beautiful.init(themeSwitcher.currentTheme())
   #+END_SRC
 
   Optionally create widget on you status bar
 
-  #+BEGIN_SRC emacs lisp
+  #+BEGIN_SRC lua
   right_layout:add(themeSwitcher.widget("/usr/share/awesome/themes"))
   -- or
   right_layout:add(themeSwitcher.widget(nil)) -- default value will be used
