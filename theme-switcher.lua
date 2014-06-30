@@ -44,29 +44,37 @@ function themeSwitcher.themes(directory)
 
     local i, t = 0, {}
     for filename in io.popen(command()):lines() do
-        i = i + 1
-        t[i] = defaultThemesPath .. "/" .. filename .. themeSuffix
+        if filename ~= ".." and filename ~= "." then
+            i = i + 1
+            t[i] = defaultThemesPath .. "/" .. filename .. themeSuffix
+        end
     end
 
     return t
 end
 
-function themeSwitcher.nextTheme(current, directory)
+function themeSwitcher.nextTheme(current, directory, dir)
     local t = themeSwitcher.themes(directory)
     local currentTheme = themeSwitcher.currentTheme()
     local result = defaultTheme
+    local length = 1
+
+    while t[length] do
+        length = length + 1
+    end
 
     local i = 1
     local cont = true
     while t[i] and cont do
         if t[i] == currentTheme then
-
-            if t[i + 1] then
-                result = t[i + 1]
-            elseif t[0] then
-                result = t[0]
+            if t[i + dir] then
+                result = t[i + dir]
+            elseif dir > 0 then
+                result = t[1]
+            elseif dir < 0 then
+                result = t[length - 1]
             else
-                result = t[i]
+                result  = t[i]
             end
 
             cont = false
@@ -92,7 +100,7 @@ function themeSwitcher.widget(path)
     local release = function ()
         themeSwitcher.setCurrentTheme(
             themeSwitcher.nextTheme(
-                themeSwitcher.currentTheme(), path))
+                themeSwitcher.currentTheme(), path, 1))
         awesome.restart()
     end
 
