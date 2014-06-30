@@ -8,7 +8,7 @@
   Load theme switcher
 
   #+BEGIN_SRC emacs lisp
-  local themeSwitcher = require("theme-switcher") -- load extension
+  local themeSwitcher = require("theme-switcher")
   #+END_SRC
 
   Initialize beautiful with it's current theme
