@@ -38,6 +38,13 @@ local defaultThemesPath = "/usr/share/awesome/themes"
 local defaultTheme = defaultThemesPath .. "/default" .. themeSuffix
 
 function themeSwitcher.themes(directory)
+    if directory == nil then
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = logTag,
+                         text = "directory is nil. using default instead" })
+        return themeSwitcher.themes(defaultThemesPath)
+    end
+
     local function command()
         return 'ls -a "' .. directory .. '"' -- @todo add cases for different platforms
     end
@@ -48,6 +55,14 @@ function themeSwitcher.themes(directory)
             i = i + 1
             t[i] = defaultThemesPath .. "/" .. filename .. themeSuffix
         end
+    end
+
+    if t[1] == nil then
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = logTag,
+                         text = "there are no themes in " .. directory ..
+                             ". using default" })
+        return themeSwitcher.themes(defaultThemesPath)
     end
 
     return t
