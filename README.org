@@ -1,0 +1,24 @@
+* Awesome Theme Switcher
+
+  Provides functionality to store current theme setting on disk and
+  to create interactive widget to switch themes.
+
+  ** Usage
+
+  Load theme switcher
+
+  #+BEGIN_SRC emacs lisp
+  local themeSwitcher = require("theme-switcher") -- load extension
+  #+END_SRC
+
+  Initialize beautiful with it's current theme
+
+  #+BEGIN_SRC emacs lisp
+  beautiful.init(themeSwitcher.currentTheme())
+  #+END_SRC
+
+  Optionally create widget on you status bar
+
+  #+BEGIN_SRC emacs lisp
+  right_layout:add(themeSwitcher.widget(nil))
+  #+END_SRC
