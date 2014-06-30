@@ -83,11 +83,15 @@ function themeSwitcher.nextTheme(current, directory, dir)
         i = i + 1
     end
 
+    if cont and t[0] then
+        result = t[1]
+    end
+
     return result
 end
 
 function themeSwitcher.widget(path)
-    local logo = " &#358;  ";
+    local logo = " &#358;  "
 
     if path == nil then
         path = defaultThemesPath
