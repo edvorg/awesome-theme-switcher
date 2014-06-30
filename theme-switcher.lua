@@ -32,8 +32,23 @@ local themeSwitcher = {}
 
 local themeConfigFile = ".awesome-theme"
 local themeConfigPath = os.getenv("HOME") .. "/" .. themeConfigFile
+local themeSuffix = "/theme.lua"
 local defaultThemesPath = "/usr/share/awesome/themes"
-local defaultTheme = defaultThemesPath .. "/default/theme.lua"
+local defaultTheme = defaultThemesPath .. "/default" .. themeSuffix
+
+local function scandir(directory)
+    local function command()
+        return 'ls -a "' .. directory .. '"' -- @todo add cases for different platforms
+    end
+
+    local i, t = 0, {}
+    for filename in io.popen(command()):lines() do
+        i = i + 1
+        t[i] = defaultThemesPath .. "/" .. filename .. themeSuffix
+    end
+
+    return t
+end
 
 function themeSwitcher.widget(path)
     local logo = " &#358;  ";
