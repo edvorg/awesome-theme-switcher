@@ -52,12 +52,12 @@ function themeSwitcher.themes(directory)
     local i, t = 0, {}
     for filename in io.popen(command()):lines() do
         if filename ~= ".." and filename ~= "." then
-            i = i + 1
             t[i] = defaultThemesPath .. "/" .. filename .. themeSuffix
+            i = i + 1
         end
     end
 
-    if t[1] == nil then
+    if t[0] == nil then
         naughty.notify({ preset = naughty.config.presets.critical,
                          title = logTag,
                          text = "there are no themes in " .. directory ..
@@ -72,20 +72,20 @@ function themeSwitcher.nextTheme(current, directory, dir)
     local t = themeSwitcher.themes(directory)
     local currentTheme = themeSwitcher.currentTheme()
     local result = defaultTheme
-    local length = 1
+    local length = 0
 
     while t[length] do
         length = length + 1
     end
 
-    local i = 1
+    local i = 0
     local cont = true
     while t[i] and cont do
         if t[i] == currentTheme then
             if t[i + dir] then
                 result = t[i + dir]
             elseif dir > 0 then
-                result = t[1]
+                result = t[0]
             elseif dir < 0 then
                 result = t[length - 1]
             else
@@ -99,7 +99,7 @@ function themeSwitcher.nextTheme(current, directory, dir)
     end
 
     if cont and t[0] then
-        result = t[1]
+        result = t[0]
     end
 
     return result
