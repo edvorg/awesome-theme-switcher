@@ -88,8 +88,6 @@ function themeSwitcher.nextTheme(current, directory, dir)
                 result = t[0]
             elseif dir < 0 then
                 result = t[length - 1]
-            else
-                result  = t[i]
             end
 
             cont = false
